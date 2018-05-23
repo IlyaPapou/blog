@@ -1,0 +1,23 @@
+{
+  "plugins": ["node", "prettier"],
+  "extends": [
+    "eslint:recommended",
+    "plugin:node/recommended",
+    "plugin:prettier/recommended"
+  ],
+  "rules": {
+    "node/exports-style": ["error", "module.exports"],
+    "prettier/prettier": ["error",{"singleQuote": true}],
+    "no-console": 0
+  },
+  "parser": "babel-eslint",
+  "parserOptions": {
+    "ecmaFeatures": {
+      "jsx": true
+    }
+  },
+  "env": {
+    "browser": true,
+    "node": true
+  }
+}

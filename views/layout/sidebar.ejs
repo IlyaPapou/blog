@@ -1,0 +1,44 @@
+<div class="sidebar">
+    <div class="box auth">
+        <% if (!user.id && !user.login) { %>
+        <form method="post" class="login">
+            <h2>Enter</h2>
+            <div class="form-group">
+                <label for="login-login">Login</label>
+                <input type="text" name="login" id="login-login">
+            </div>
+            <div class="form-group">
+                <label for="login-password">Password</label>
+                <input type="password" name="password" id="login-password">
+            </div>
+            <div class="buttons">
+                <button class="switch-button secondary-inverse">Registration</button>
+                <button class="login-button">Enter</button>
+            </div>
+        </form>
+        <form method="post" class="registration">
+            <h2>Registration</h2>
+            <div class="form-group">
+                <label for="registration-login">Login</label>
+                <input type="text" name="login" id="registration-login">
+            </div>
+            <div class="form-group">
+                <label for="registration-password">Password</label>
+                <input name="password" type="password" id="registration-password">
+            </div>
+            <div class="form-group">
+                <label for="registration-password-confirm">Confirm Password</label>
+                <input name="passwordConfirm" type="password" id="registration-password-confirm">
+            </div>
+            <div class="buttons">
+                <button class="switch-button secondary-inverse">Registration</button>
+                <button class="registration-button">Enter</button>
+            </div>
+        </form>
+        <% } else { %>
+        <p>Hello, <%= user.login %>!</p>
+        <a href="/api/auth/logout">Logout</a>
+        <% } %>
+    </div>
+    <div class="box">box2</div>
+</div>
