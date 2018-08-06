@@ -20,7 +20,7 @@ router.get('/add', (req, res) => {
 });
 
 //POST add
-router.post('/add', (req, res) => {
+router.post('/add', async (req, res) => {
   const userId = req.session.userId;
   const userLogin = req.session.userLogin;
 
@@ -53,22 +53,23 @@ router.post('/add', (req, res) => {
         fields: ['body']
       });
     } else {
-      models.Post.create({
-        title,
-        body: turndownService.turndown(body),
-        owner: userId
-      })
-        .then(user => {
+      try {
+        let post = await models.Post.create({
+          title,
+          body: turndownService.turndown(body),
+          owner: userId
+        });
+        if (post) {
           res.json({
             ok: true
           });
-        })
-        .catch(err => {
-          res.json({
-            ok: false,
-            error: 'Error'
-          });
+        }
+      } catch (e) {
+        res.json({
+          ok: false,
+          error: 'Error'
         });
+      }
     }
   }
 });

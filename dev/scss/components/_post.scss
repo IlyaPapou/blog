@@ -12,7 +12,15 @@
     }
   }
 
-  .post-body {
+  .post-body-main {
+    p {
+      text-align: justify;
+      overflow-y: scroll;
+      max-height: 200px;
+    }
+  }
+
+  .post-body-current {
     p {
       text-align: justify;
     }
