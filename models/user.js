@@ -6,7 +6,8 @@ const schema = new Schema(
     login: {
       type: String,
       required: true,
-      unique: true
+      unique: true,
+      sparse: true
     },
     password: {
       type: String,

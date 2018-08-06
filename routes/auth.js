@@ -4,7 +4,7 @@ const models = require('../models');
 const bcrypt = require('bcrypt-nodejs');
 
 //POST is registered
-router.post('/register', (req, res) => {
+router.post('/register', async (req, res) => {
   const login = req.body.login;
   const password = req.body.password;
   const passwordConfirm = req.body.passwordConfirm;
@@ -44,28 +44,19 @@ router.post('/register', (req, res) => {
       fields: ['login']
     });
   } else {
-    models.User.findOne({
-      login
-    }).then(user => {
+    try {
+      let user = await models.User.findOne({ login });
       if (!user) {
-        bcrypt.hash(password, null, null, (err, hash) => {
-          models.User.create({
+        bcrypt.hash(password, null, null, async (err, hash) => {
+          user = await models.User.create({
             login,
             password: hash
-          })
-            .then(user => {
-              req.session.userId = user.id;
-              req.session.userLogin = user.login;
-              res.json({
-                ok: true
-              });
-            })
-            .catch(err => {
-              res.json({
-                ok: false,
-                error: 'Error'
-              });
-            });
+          });
+          req.session.userId = user.id;
+          req.session.userLogin = user.login;
+          res.json({
+            ok: true
+          });
         });
       } else {
         res.json({
@@ -74,12 +65,14 @@ router.post('/register', (req, res) => {
           field: login
         });
       }
-    });
+    } catch (e) {
+      res.json({ ok: false, error: 'Error' });
+    }
   }
 });
 
 //POST is logged
-router.post('/login', (req, res) => {
+router.post('/login', async (req, res) => {
   const login = req.body.login;
   const password = req.body.password;
   if (!login || !password) {
@@ -92,38 +85,37 @@ router.post('/login', (req, res) => {
       fields
     });
   } else {
-    models.User.findOne({ login })
-      .then(user => {
-        if (!user) {
-          res.json({
-            ok: false,
-            error: "Login or password doesn't match",
-            fields: ['login', 'password']
-          });
-        } else {
-          bcrypt.compare(password, user.password, function(err, result) {
-            if (!result) {
-              res.json({
-                ok: false,
-                error: "Login or password doesn't match",
-                fields: ['login', 'password']
-              });
-            } else {
-              req.session.userId = user.id;
-              req.session.userLogin = user.login;
-              res.json({
-                ok: true
-              });
-            }
-          });
-        }
-      })
-      .catch(err => {
+    try {
+      let user = await models.User.findOne({ login });
+      if (!user) {
         res.json({
           ok: false,
-          error: 'Error, try once again'
+          error: "Login or password doesn't match",
+          fields: ['login', 'password']
         });
+      } else {
+        bcrypt.compare(password, user.password, function(err, result) {
+          if (!result) {
+            res.json({
+              ok: false,
+              error: "Login or password doesn't match",
+              fields: ['login', 'password']
+            });
+          } else {
+            req.session.userId = user.id;
+            req.session.userLogin = user.login;
+            res.json({
+              ok: true
+            });
+          }
+        });
+      }
+    } catch (e) {
+      res.json({
+        ok: false,
+        error: 'Error, try once again'
       });
+    }
   }
 });
 

@@ -2,7 +2,7 @@ const faker = require('faker');
 const models = require('./models');
 const TurndownService = require('turndown');
 
-const owner = '5b02dddb9573c8056735ba09';
+const owner = '5b191d6b97a62103cc3443d6';
 
 module.exports = () => {
   models.Post.remove()
@@ -11,10 +11,10 @@ module.exports = () => {
         const turndownService = new TurndownService();
         models.Post.create({
           title: faker.lorem.words(5),
-          body: turndownService.turndown(faker.lorem.words(19999)),
+          body: turndownService.turndown(faker.lorem.words(9999)),
           owner
         })
-          .then(console.log)
+          .then()
           .catch(console.log);
       });
     })
