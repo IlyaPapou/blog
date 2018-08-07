@@ -31,13 +31,16 @@
                 <input name="passwordConfirm" type="password" id="registration-password-confirm">
             </div>
             <div class="buttons">
-                <button class="switch-button secondary-inverse">Registration</button>
+                <button class="switch-button secondary-inverse">Sing up</button>
                 <button class="registration-button">Enter</button>
             </div>
         </form>
         <% } else { %>
-        <p>Hello, <%= user.login %>!</p>
-        <a href="/api/auth/logout">Logout</a>
+        <ul>
+            <li>Hello, <a href="/users/<%= user.login %>"><%= user.login %></a>!</li>
+            <li><a href="/post/add">Add post</a></li>
+            <li><a href="/api/auth/logout">Logout</a></li>
+        </ul>
         <% } %>
     </div>
     <div class="box">box2</div>

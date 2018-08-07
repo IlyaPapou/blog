@@ -1,13 +1,5 @@
 /* eslint-disable no-undef */
 $(function() {
-  // eslint-disable-next-line
-  var editor = new MediumEditor('#post-body', {
-    placeholder: {
-      text: '',
-      hideOnClick: true
-    }
-  });
-
   //remove errors
   function removeErrors() {
     $('.post-form p.error').remove();
@@ -26,7 +18,7 @@ $(function() {
 
     var data = {
       title: $('#post-title').val(),
-      body: $('#post-body').html()
+      body: $('#post-body').val()
     };
 
     $.ajax({
@@ -44,6 +36,27 @@ $(function() {
         }
       } else {
         $(location).attr('href', '/');
+      }
+    });
+  });
+
+  // upload image
+  $('#fileinfo').on('submit', function(e) {
+    e.preventDefault();
+
+    var formData = new FormData(this);
+
+    $.ajax({
+      type: 'Post',
+      url: '/upload/image',
+      data: formData,
+      processData: false,
+      contentType: false,
+      success: function(r) {
+        console.log(r);
+      },
+      error: function(e) {
+        console.log(e);
       }
     });
   });

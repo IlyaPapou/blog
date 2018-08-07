@@ -50,6 +50,7 @@ app.use('/', routes.archive);
 app.use('/api/auth', routes.auth);
 app.use('/post', routes.post);
 app.use('/comment', routes.comment);
+app.use('/upload', routes.upload);
 
 //catch 404 and forward to error handling
 app.use((req, res, next) => {
