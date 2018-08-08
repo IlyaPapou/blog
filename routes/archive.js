@@ -13,7 +13,9 @@ async function posts(req, res) {
   const page = req.params.page || 1;
 
   try {
-    const posts = await models.Post.find({})
+    const posts = await models.Post.find({
+      status: 'published'
+    })
       .skip(perPage * page - perPage)
       .limit(perPage)
       .populate('owner')
@@ -51,6 +53,7 @@ router.get('/posts/:post', async (req, res, next) => {
   } else {
     try {
       const post = await models.Post.findOne({
+        status: 'published',
         url
       });
 
@@ -112,11 +115,6 @@ router.get('/users/:login/:page*?', async (req, res) => {
   } catch (e) {
     throw new Error('Server Error');
   }
-});
-
-router.get('/test', async (req, res) => {
-  const comments = await models.Comment.find();
-  res.json(comments);
 });
 
 module.exports = router;
