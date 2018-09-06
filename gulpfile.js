@@ -28,7 +28,9 @@ gulp.task('scripts', () =>
       'dev/js/auth.js',
       'dev/js/post.js',
       'dev/js/comment.js',
-      'dev/js/autoresize.js'
+      'dev/js/autoresize.js',
+      'dev/js/storage.js',
+      'dev/js/saveforms.js'
     ])
     .pipe(concat('scripts.js'))
     .pipe(uglify())

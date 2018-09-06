@@ -55,6 +55,8 @@ $(function() {
   // upload image
   $('#file').on('change', function(e) {
     e.preventDefault();
+    var title = $('#post-title').val();
+    var body = $('#post-body').val();
 
     var formData = new FormData();
     formData.append('postId', $('#post-id').val());
@@ -73,7 +75,7 @@ $(function() {
             '" alt="Super image!"></div>'
         );
 
-        location.reload();
+        location.reload(false);
       },
       error: function(e) {
         console.log(e);
