@@ -10,12 +10,12 @@
                 <% } %>
                 <div class="form-group">
                     <label for="post-title">Title</label>
-                    <input type="text" name="title" id="post-title"
+                    <input type="text" class="ntSaveForms" name="title" id="post-title"
                            value="<%= post.title %>">
                 </div>
                 <div class="form-group">
                     <label for="post-body">Text</label>
-                    <textarea id="post-body"><%= post.body %></textarea>
+                    <textarea class="ntSaveForms" id="post-body"><%= post.body %></textarea>
                 </div>
                 <input type="hidden" id="post-id" name="postId"
                        value="<%= post.id %>"/>
@@ -33,8 +33,8 @@
                 </div>
 
                 <div class="buttons">
-                    <button class="save-button secondary-inverse">Save as draft</button>
-                    <button class="publish-button">Publish</button>
+                    <button class="save-button secondary-inverse ntSaveFormsSubmit">Save as draft</button>
+                    <button class="publish-button ntSaveFormsSubmit">Publish</button>
                 </div>
             </form>
         </div>

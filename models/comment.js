@@ -22,10 +22,10 @@ const schema = new Schema(
       type: Schema.Types.ObjectId,
       ref: 'Comment'
     },
-    createdAt: {
-      type: Date,
-      default: Date.now()
-    },
+    // createdAt: {
+    //   type: Date,
+    //   default: Date.now()
+    // },
     children: [
       {
         type: Schema.Types.ObjectId,
@@ -35,7 +35,7 @@ const schema = new Schema(
     ]
   },
   {
-    timestamps: false
+    timestamps: true
   }
 );
 
