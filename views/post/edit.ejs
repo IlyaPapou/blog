@@ -4,9 +4,9 @@
         <div class="content add-post">
             <form method="post" class="post-form">
                 <% if(post.title) { %>
-                <h2>Edit post</h2>
+                    <h2>Edit post</h2>
                 <% } else { %>
-                <h2>Create post</h2>
+                    <h2>Create post</h2>
                 <% } %>
                 <div class="form-group">
                     <label for="post-title">Title</label>
@@ -18,15 +18,24 @@
                     <textarea id="post-body"><%= post.body %></textarea>
                 </div>
                 <input type="hidden" id="post-id" name="postId"
-                       value="<%= post.id %>">
+                       value="<%= post.id %>"/>
+
+                <div method="POST" id="fileinfo">
+                    <% post.uploads.forEach(function(upload) {
+                    %>
+                        <div class="img-container" id="<%= upload.id %>">
+                            <img src="/uploads<%= upload.path %>" alt="Super image!"></div>
+                    <% }) %>
+
+                    <label for="file" class="custom-file-upload">
+                        <input type="file" name="file" id="file" required/>+
+                    </label>
+                </div>
+
                 <div class="buttons">
                     <button class="save-button secondary-inverse">Save as draft</button>
                     <button class="publish-button">Publish</button>
                 </div>
-            </form>
-            <form method="POST" enctype="multipart/form-data" name="fileinfo" id="fileinfo">
-                <input type="file" name="file" id="file" required/>
-                <button class="upload-button">Upload image</button>
             </form>
         </div>
         <% include ../layout/sidebar.ejs %>

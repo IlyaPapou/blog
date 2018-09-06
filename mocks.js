@@ -8,12 +8,12 @@ module.exports = async () => {
   try {
     await models.Post.remove();
 
-    Array.from({ length: 20 }).forEach(async () => {
+    Array.from({ length: 2 }).forEach(async () => {
       const title = faker.lorem.words(5);
       const url = `${tr.slugify(title)}-${Date.now().toString(36)}`;
       await models.Post.create({
         title,
-        body: faker.lorem.words(5000),
+        body: faker.lorem.words(50),
         owner,
         url
       });

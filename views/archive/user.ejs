@@ -3,30 +3,30 @@
     <div class="container">
         <div class="content">
             <% for (var i = 0;i < posts.length; i++ ) { %>
-            <div class="post">
-                <div class="post-top">
-                    <h2>
-                        <a href="/posts/<%= posts[i].url %>"><%= posts[i].title %></a>
-                    </h2>
+                <div class="post">
+                    <div class="post-top">
+                        <h2>
+                            <a href="/posts/<%= posts[i].url %>"><%= posts[i].title %></a>
+                        </h2>
+                    </div>
+                    <div class="post-body-main">
+                        <%- posts[i].body %>
+                    </div>
+                    <div class="post-footer">
+                        <div class="author"></div>
+                        <a href="/posts/<%= posts[i].url %>#<%= posts[i].id %>">Comments: <%= posts[i].commentCount %></a>
+                    </div>
                 </div>
-                <div class="post-body-main">
-                    <p><%= posts[i].body %></p>
-                </div>
-                <div class="post-footer">
-                    <div class="author"></div>
-                    <a href="/posts/<%= posts[i].url %>#<%= posts[i].id %>">Comments: <%= posts[i].commentCount %></a>
-                </div>
-            </div>
             <% } %>
             <div class="pagination">
                 <% if (current > 2){ %>
-                <a href="/users/<%= _user.login %>/<%= Number(current) - 1 %>" class="new">&#8592 New posts</a>
+                    <a href="/users/<%= _user.login %>/<%= Number(current) - 1 %>" class="new">&#8592 New posts</a>
                 <% } %>
                 <% if (current == 2){ %>
-                <a href="/users/<%= _user.login %>" class="new">&#8592 First page</a>
+                    <a href="/users/<%= _user.login %>" class="new">&#8592 First page</a>
                 <% } %>
                 <% if (current > 0 && current < pages){ %>
-                <a href="/users/<%= _user.login %>/<%= Number(current) + 1 %>" class="old">Old posts &#8594</a>
+                    <a href="/users/<%= _user.login %>/<%= Number(current) + 1 %>" class="old">Old posts &#8594</a>
                 <% } %>
             </div>
         </div>

@@ -64,6 +64,8 @@ $(function() {
 
         $(commentForm).after(newComment);
         commentForm.remove();
+
+        location.reload();
       }
     });
   });

@@ -53,24 +53,46 @@ $(function() {
   });
 
   // upload image
-  $('#fileinfo').on('submit', function(e) {
+  $('#file').on('change', function(e) {
     e.preventDefault();
 
-    var formData = new FormData(this);
+    var formData = new FormData();
+    formData.append('postId', $('#post-id').val());
+    formData.append('file', $('#file')[0].files[0]);
 
     $.ajax({
-      type: 'Post',
+      type: 'POST',
       url: '/upload/image',
       data: formData,
       processData: false,
       contentType: false,
-      success: function(r) {
-        console.log(r);
+      success: function(data) {
+        $('#fileinfo').prepend(
+          '<div class="img-container"><img src="/uploads' +
+            data.filePath +
+            '" alt="Super image!"></div>'
+        );
+
+        location.reload();
       },
       error: function(e) {
         console.log(e);
       }
     });
+  });
+
+  // inserting image
+  $('.img-container').on('click', function() {
+    var imageId = $(this).attr('id');
+    var txt = $('#post-body');
+    var caretPos = txt[0].selectionStart;
+    var textAreaTxt = txt.val();
+    var txtToAdd = '![alt text](image' + imageId + ')';
+    txt.val(
+      textAreaTxt.substring(0, caretPos) +
+        txtToAdd +
+        textAreaTxt.substring(caretPos)
+    );
   });
 });
 

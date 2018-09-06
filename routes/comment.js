@@ -75,4 +75,11 @@ router.post('/add', async (req, res) => {
   }
 });
 
+// router.get('/all', async (req, res) => {
+//   const all = await models.Comment.find();
+//   console.log(all);
+//
+//   res.json(all);
+// });
+
 module.exports = router;
