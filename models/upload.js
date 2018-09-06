@@ -3,13 +3,11 @@ const Schema = mongoose.Schema;
 
 const schema = new Schema(
   {
-    login: {
-      type: String,
-      required: true,
-      unique: true,
-      sparse: true
+    owner: {
+      type: Schema.Types.ObjectId,
+      ref: 'User'
     },
-    password: {
+    path: {
       type: String,
       required: true
     }
@@ -23,4 +21,4 @@ schema.set('toJSON', {
   virtuals: true
 });
 
-module.exports = mongoose.model('User', schema);
+module.exports = mongoose.model('Upload', schema);

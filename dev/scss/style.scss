@@ -14,8 +14,7 @@ $borderRadius: 2px;
 @import 'grid';
 @import 'typography';
 @import 'form';
-@import '../../node_modules/medium-editor/dist/css/medium-editor';
-@import '../../node_modules/medium-editor/dist/css/themes/default';
+@import 'links';
 
 html {
   display: flex;
@@ -37,3 +36,4 @@ body {
 @import 'footer';
 @import 'components/post';
 @import 'components/auth';
+@import 'components/comments';

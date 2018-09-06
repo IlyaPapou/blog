@@ -1,13 +1,5 @@
 /* eslint-disable no-undef */
 $(function() {
-  // eslint-disable-next-line
-  var editor = new MediumEditor('#post-body', {
-    placeholder: {
-      text: '',
-      hideOnClick: true
-    }
-  });
-
   //remove errors
   function removeErrors() {
     $('.post-form p.error').remove();
@@ -20,17 +12,24 @@ $(function() {
   });
 
   //publish
-  $('.publish-button').on('click', function(e) {
+  $('.publish-button, .save-button').on('click', function(e) {
     e.preventDefault();
     removeErrors();
 
+    var isDraft =
+      $(this)
+        .attr('class')
+        .split(' ')[0] === 'save-button';
+
     var data = {
       title: $('#post-title').val(),
-      body: $('#post-body').html()
+      body: $('#post-body').val(),
+      isDraft: isDraft,
+      postId: $('#post-id').val()
     };
 
     $.ajax({
-      type: 'Post',
+      type: 'POST',
       data: JSON.stringify(data),
       contentType: 'application/json',
       url: '/post/add'
@@ -43,9 +42,57 @@ $(function() {
           });
         }
       } else {
-        $(location).attr('href', '/');
+        // $(location).attr('href', '/');
+        if (isDraft) {
+          $(location).attr('href', '/post/edit/' + data.post.id);
+        } else {
+          $(location).attr('href', '/posts/' + data.post.url);
+        }
       }
     });
+  });
+
+  // upload image
+  $('#file').on('change', function(e) {
+    e.preventDefault();
+
+    var formData = new FormData();
+    formData.append('postId', $('#post-id').val());
+    formData.append('file', $('#file')[0].files[0]);
+
+    $.ajax({
+      type: 'POST',
+      url: '/upload/image',
+      data: formData,
+      processData: false,
+      contentType: false,
+      success: function(data) {
+        $('#fileinfo').prepend(
+          '<div class="img-container"><img src="/uploads' +
+            data.filePath +
+            '" alt="Super image!"></div>'
+        );
+
+        location.reload();
+      },
+      error: function(e) {
+        console.log(e);
+      }
+    });
+  });
+
+  // inserting image
+  $('.img-container').on('click', function() {
+    var imageId = $(this).attr('id');
+    var txt = $('#post-body');
+    var caretPos = txt[0].selectionStart;
+    var textAreaTxt = txt.val();
+    var txtToAdd = '![alt text](image' + imageId + ')';
+    txt.val(
+      textAreaTxt.substring(0, caretPos) +
+        txtToAdd +
+        textAreaTxt.substring(caretPos)
+    );
   });
 });
 

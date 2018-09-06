@@ -1,0 +1,36 @@
+<% include ../layout/header.ejs %>
+<div class="main">
+    <div class="container">
+        <div class="content">
+            <div class="post">
+                <div class="post-top">
+                    <h2><%= post.title %></h2>
+                </div>
+                <div class="post-body-current">
+                    <%- post.body %>
+                </div>
+                <div class="post-footer">
+                    <div class="author">
+                        Author: <a href="/users/<%= post.owner.login %>"><%= post.owner.login %></a>
+                    </div>
+                </div>
+            </div>
+            <div class="comments" id="<%= post.id %>">
+                <h3>Comments</h3>
+                <div class="comment-list">
+                    <%- include('../layout/comments.ejs', {items: comments}) %>
+                    <span class="link" id="new">Leave comment</span>
+                    <form class="comment">
+                        <textarea name="body"></textarea>
+                        <div class="buttons">
+                            <button class="cancel secondary">Cancel</button>
+                            <button class="send">Send</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <% include ../layout/sidebar.ejs %>
+    </div>
+</div>
+<% include ../layout/footer.ejs %>

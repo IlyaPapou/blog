@@ -1,22 +1,24 @@
 const faker = require('faker');
 const models = require('./models');
-const TurndownService = require('turndown');
+const tr = require('transliter');
 
-const owner = '5b02dddb9573c8056735ba09';
+const owner = '5b191d6b97a62103cc3443d6';
 
-module.exports = () => {
-  models.Post.remove()
-    .then(() => {
-      Array.from({ length: 20 }).forEach(() => {
-        const turndownService = new TurndownService();
-        models.Post.create({
-          title: faker.lorem.words(5),
-          body: turndownService.turndown(faker.lorem.words(19999)),
-          owner
-        })
-          .then(console.log)
-          .catch(console.log);
+module.exports = async () => {
+  try {
+    await models.Post.remove();
+
+    Array.from({ length: 2 }).forEach(async () => {
+      const title = faker.lorem.words(5);
+      const url = `${tr.slugify(title)}-${Date.now().toString(36)}`;
+      await models.Post.create({
+        title,
+        body: faker.lorem.words(50),
+        owner,
+        url
       });
-    })
-    .catch(console.log);
+    });
+  } catch (e) {
+    console.log(e);
+  }
 };

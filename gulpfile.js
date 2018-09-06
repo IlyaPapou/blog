@@ -27,8 +27,8 @@ gulp.task('scripts', () =>
     .src([
       'dev/js/auth.js',
       'dev/js/post.js',
-      'node_modules/medium-editor/dist/js/medium-editor.js'
-      //
+      'dev/js/comment.js',
+      'dev/js/autoresize.js'
     ])
     .pipe(concat('scripts.js'))
     .pipe(uglify())
